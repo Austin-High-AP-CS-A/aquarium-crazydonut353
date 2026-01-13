@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Fish{
     private String type;
     private int minTemp;
@@ -37,7 +39,7 @@ public class Fish{
      * - If the temperature ranges do not overlap, an error message is printed, and the fish is not added to the ArrayList.
      */
     public void addFriend(Fish buddy){
-        if(isCompatible()) {
+        if(isCompatible(buddy)) {
             friends.add(buddy);
         } else {
             throw new Error("bro you cant do that the fish gotta have the same temp range.");
@@ -48,7 +50,7 @@ public class Fish{
      * @return true if this fish is compatible with otherFish, false otherwise
      */
     public boolean isCompatible(Fish otherFish){
-        return (otherFish.minTemp()<maxTemp && otherFish.maxTemp()>minTemp)
+        return (otherFish.minTemp()<maxTemp && otherFish.maxTemp()>minTemp);
     }
 
     
