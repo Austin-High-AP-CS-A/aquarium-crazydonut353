@@ -3,7 +3,7 @@ import java.util.Arrays;
 
 public class Main{
     public static void main(String[] args){
-        //Fish
+                //Fish
         Fish catfish1 = new Fish("Catfish1",75,85); //0
         Fish catfish2 = new Fish("Catfish2",75,85); //1
         Fish perch1 = new Fish("Perch1",63,77); //2
@@ -65,5 +65,47 @@ public class Main{
         shad2.addFriend(shad1);
         shad2.addFriend(minnow1);
         shad2.addFriend(minnow2);
+        
+        ArrayList<Fish> sortedBag = new ArrayList<Fish>();
+        sortedBag.add(catfish1);
+        sortedBag.add(catfish2);
+        sortedBag.add(perch1);
+        sortedBag.add(perch2);
+        sortedBag.add(trout1);
+        sortedBag.add(trout2);
+        sortedBag.add(minnow1);
+        sortedBag.add(minnow2);
+        sortedBag.add(shad1);
+        sortedBag.add(shad2);
+        sortedBag.add(anglerfish);
+        Aquarium mychud = new Aquarium();
+        
+        addTanks(sortedBag,mychud);
+        
+        for (int i = 0; i<mychud.getTanks().size(); i++) {
+            System.out.println(mychud.getTanks().get(i).temp());
+        }
+    }
+    
+    public static void addTanks(ArrayList<Fish> sortedBag, Aquarium aq) {
+        int lowi = 0;
+        int highi = 0;
+        for(int i = 0; i < sortedBag.size(); i++) {
+            if(sortedBag.get(i).maxTemp()<sortedBag.get(lowi).maxTemp()) {
+                lowi = i;
+            }
+            if(sortedBag.get(i).minTemp()>sortedBag.get(highi).minTemp()) {
+                highi = i;
+            }
+        }
+        
+        lowi = (int)Math.floor(sortedBag.get(lowi).maxTemp()/5) * 5;
+        highi = (int)Math.ceil(sortedBag.get(highi).minTemp()/5) * 5;
+        
+        for (int i = lowi; i < highi; i+=5) {
+            aq.addTank(new Tank(i));
+        }
+        
+        aq.addFish(sortedBag);
     }
 }
