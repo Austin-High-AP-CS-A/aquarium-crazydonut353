@@ -15,7 +15,7 @@ public class Fish{
      * Postcondition: minTemp() <= maxTemp()
      */
     public int minTemp(){
-        
+        return minTemp;
     }
 
     /**
@@ -23,7 +23,7 @@ public class Fish{
      * Postcondition: maxTemp() >= minTemp()
      */
     public int maxTemp(){
-        
+        return maxTemp;
     }
 
     /**
@@ -37,13 +37,18 @@ public class Fish{
      * - If the temperature ranges do not overlap, an error message is printed, and the fish is not added to the ArrayList.
      */
     public void addFriend(Fish buddy){
+        if(isCompatible()) {
+            friends.add(buddy);
+        } else {
+            throw new Error("bro you cant do that the fish gotta have the same temp range.");
+        }
     }
 
     /**
      * @return true if this fish is compatible with otherFish, false otherwise
      */
     public boolean isCompatible(Fish otherFish){
-        
+        return (otherFish.minTemp()<maxTemp && otherFish.maxTemp()>minTemp)
     }
 
     
