@@ -16,9 +16,23 @@ public class Aquarium{
      * Postcondition: The state of this aquarium is unchanged.
      * @param fishy the fish to be checked
      * @return a suitable tank for fishy or null if no such tank exists
+
+     * I changes the function for index so it works well.
      */
-    private Tank findTank(Fish fishy){
-        /* to be implemented in part (a) */
+    private int findTank(Fish fishy){
+        for(int i = 0; i < tanks.size(); i++) {
+            ArrayList<Fish> tfih = tanks.get(i).getFish();
+            boolean b = true;
+            for(int j = 0; j < tfih.size(); j++) {// runs too long but whatever
+                if(!fishy.isCompatible(tfih.get(j))) {
+                    b = false;
+                }
+            }
+            if(b&&tanks.get(i).temp()>fishy.minTemp() && tanks.get(i).temp()<fishy.maxTemp()) {
+                return i;
+            }
+        }
+        return null;
     }
 
     /**
@@ -28,7 +42,16 @@ public class Aquarium{
      * @return a list of the fish in fishes that could not be added
      */
     public ArrayList<Fish> addFish(ArrayList<Fish> fishes){
-        /* to be implemented in part (b) */
+        for(int i = 0; i < fishes.size(); i++) {
+            int indx = findTank(fishes.get(i));
+            if(indx) {
+                tanks.get(indx).addFish(fishes.get(i));
+                fishes.splice(i, 1);
+                i--;
+            }
+        }
+
+        return fishes
     }
 
     /**
@@ -40,6 +63,26 @@ public class Aquarium{
      * @return true if fishTank was added, false otherwise
      */
     public boolean addTank(Tank fishTank){
-        /* to be implemented in part (c) */
+        //adding at all sides (including end)
+        for(int i = 0; i <= tanks.size(); i++) {
+            if(i == 0) {// bad ahh rushed code
+                if(Math.abs(fishTank.temp()-tanks.get(i).temp()) <= 5) {
+                    tanks.add(i);
+                    return true;
+                }
+            }
+            if(i == tanks.size()) {
+                if(Math.abs(fishTank.temp()-tanks.get(i-1).temp()) <= 5) {
+                    tanks.add(i);
+                    return true;
+                }
+            }
+            if(Math.abs(fishTank.temp()-tanks.get(i-1).temp()) <= 5 && Math.abs(fishTank.temp()-tanks.get(i).temp()) <= 5) {
+                    tanks.add(i);
+                    return true;
+            }
+        }
+
+        return false;
     }
 }
